@@ -22,5 +22,33 @@ public class SudokuValidator {
             }
             System.out.println();
         }
+
+        if (validarFilas(sudoku)) {
+            System.out.println("Las filas son válidas.");
+        } else {
+            System.out.println("El Sudoku tiene errores en las filas.");
+        }
+    }
+
+    public static boolean validarFilas(int[][] sudoku) {
+
+        for (int fila = 0; fila < 9; fila++) {
+
+            boolean[] usado = new boolean[10];
+
+            for (int columna = 0; columna < 9; columna++) {
+
+                int numero = sudoku[fila][columna];
+
+                if (usado[numero]) {
+                    System.out.println("Error: número repetido en la fila " + (fila + 1));
+                    return false;
+                }
+
+                usado[numero] = true;
+            }
+        }
+
+        return true;
     }
 }
