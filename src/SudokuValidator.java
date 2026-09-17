@@ -3,7 +3,7 @@ public class SudokuValidator {
     public static void main(String[] args) {
 
         int[][] sudoku = {
-            {5, 3, 4, 6, 7, 8, 9, 1, 10},
+            {5, 3, 4, 6, 7, 8, 9, 1, 2},
             {6, 7, 2, 1, 9, 5, 3, 4, 8},
             {1, 9, 8, 3, 4, 2, 5, 6, 7},
             {8, 5, 9, 7, 6, 1, 4, 2, 3},
@@ -16,14 +16,6 @@ public class SudokuValidator {
 
         boolean[][] errores = new boolean[9][9];
 
-       System.out.println("Tablero de Sudoku:");
-
-for (int fila = 0; fila < 9; fila++) {
-    for (int columna = 0; columna < 9; columna++) {
-        System.out.print(sudoku[fila][columna] + " ");
-    }
-    System.out.println();
-}
 
 if (!validarValores(sudoku, errores)) {
     System.out.println("El Sudoku contiene valores inválidos.");
@@ -32,7 +24,7 @@ if (!validarValores(sudoku, errores)) {
 
 System.out.println("Todos los valores son válidos.");
 
-if (validarFilas(sudoku)) {
+if (validarFilas(sudoku, errores)) {
     System.out.println("Las filas son válidas.");
 } else {
     System.out.println("El Sudoku tiene errores en las filas.");
@@ -49,29 +41,59 @@ if (validarBloques(sudoku)) {
 } else {
     System.out.println("El Sudoku tiene errores en los bloques.");
 }
+System.out.println("Tablero de Sudoku:");
+
+for (int fila = 0; fila < 9; fila++) {
+    for (int columna = 0; columna < 9; columna++) {
+
+        if (errores[fila][columna]) {
+            System.out.print("[" + sudoku[fila][columna] + "] ");
+        } else {
+            System.out.print(sudoku[fila][columna] + " ");
+        }
     }
 
-    public static boolean validarFilas(int[][] sudoku) {
+    System.out.println();
+}
+    }
 
-        for (int fila = 0; fila < 9; fila++) {
 
-            boolean[] usado = new boolean[10];
 
-            for (int columna = 0; columna < 9; columna++) {
+    public static boolean validarFilas(int[][] sudoku, boolean[][] errores) {
 
-                int numero = sudoku[fila][columna];
+    boolean valido = true;
 
-                if (usado[numero]) {
-                    System.out.println("Error: número repetido en la fila " + (fila + 1));
-                    return false;
-                }
+    for (int fila = 0; fila < 9; fila++) {
 
-                usado[numero] = true;
-            }
+        int[] cantidad = new int[10];
+
+        
+        for (int columna = 0; columna < 9; columna++) {
+
+            int numero = sudoku[fila][columna];
+            cantidad[numero]++;
         }
 
-        return true;
+        
+        for (int columna = 0; columna < 9; columna++) {
+
+            int numero = sudoku[fila][columna];
+
+            if (cantidad[numero] > 1) {
+
+                errores[fila][columna] = true;
+                valido = false;
+
+                System.out.println(
+                    "Error: número " + numero
+                    + " repetido en la fila " + (fila + 1)
+                );
+            }
+        }
     }
+
+    return valido;
+}
    
 
     public static boolean validarColumnas(int[][] sudoku) {
