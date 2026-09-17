@@ -34,6 +34,12 @@ public class SudokuValidator {
         } else {
             System.out.println("El Sudoku tiene errores en las columnas.");
         }
+
+        if (validarBloques(sudoku)) {
+            System.out.println("Los bloques son válidos.");
+        } else {
+            System.out.println("El Sudoku tiene errores en los bloques.");
+        }
     }
 
     public static boolean validarFilas(int[][] sudoku) {
@@ -77,6 +83,35 @@ public class SudokuValidator {
             usado[numero] = true;
         }
     }
+    return true;
+}
+public static boolean validarBloques(int[][] sudoku) {
+
+    for (int filaInicio = 0; filaInicio < 9; filaInicio += 3) {
+
+        for (int columnaInicio = 0; columnaInicio < 9; columnaInicio += 3) {
+
+            boolean[] usado = new boolean[10];
+
+            for (int fila = filaInicio; fila < filaInicio + 3; fila++) {
+
+                for (int columna = columnaInicio; columna < columnaInicio + 3; columna++) {
+
+                    int numero = sudoku[fila][columna];
+
+                    if (usado[numero]) {
+                        System.out.println(
+                            "Error: número repetido en el bloque 3x3."
+                        );
+                        return false;
+                    }
+
+                    usado[numero] = true;
+                }
+            }
+        }
+    }
+
     return true;
 }
 }
