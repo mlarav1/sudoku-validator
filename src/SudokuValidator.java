@@ -28,6 +28,12 @@ public class SudokuValidator {
         } else {
             System.out.println("El Sudoku tiene errores en las filas.");
         }
+
+        if (validarColumnas(sudoku)) {
+            System.out.println("Las columnas son válidas.");
+        } else {
+            System.out.println("El Sudoku tiene errores en las columnas.");
+        }
     }
 
     public static boolean validarFilas(int[][] sudoku) {
@@ -51,4 +57,26 @@ public class SudokuValidator {
 
         return true;
     }
+   
+
+    public static boolean validarColumnas(int[][] sudoku) {
+
+    for (int columna = 0; columna < 9; columna++) {
+
+        boolean[] usado = new boolean[10];
+
+        for (int fila = 0; fila < 9; fila++) {
+
+            int numero = sudoku[fila][columna];
+
+            if (usado[numero]) {
+                System.out.println("Error: número repetido en la columna " + (columna + 1));
+                return false;
+            }
+
+            usado[numero] = true;
+        }
+    }
+    return true;
+}
 }
