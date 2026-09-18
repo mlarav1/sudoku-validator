@@ -16,30 +16,18 @@ public class SudokuValidator {
 
     boolean[][] errores = new boolean[9][9];
 
-    if (!validarValores(sudoku, errores)) {
-        System.out.println("El Sudoku contiene valores inválidos.");
-    } else {
-        System.out.println("Todos los valores son válidos.");
-    }
+    boolean valoresValidos = validarValores(sudoku, errores);
+    boolean filasValidas = validarFilas(sudoku, errores);
+    boolean columnasValidas = validarColumnas(sudoku, errores);
+    boolean bloquesValidos = validarBloques(sudoku, errores);
 
-    if (validarFilas(sudoku, errores)) {
-        System.out.println("Las filas son válidas.");
-    } else {
-        System.out.println("El Sudoku tiene errores en las filas.");
-    }
+     if (valoresValidos && filasValidas && columnasValidas && bloquesValidos) {
+      System.out.println("El Sudoku es válido.");
+      } else {
+      System.out.println("El Sudoku contiene errores.");
+}
 
-    if (validarColumnas(sudoku, errores)) {
-        System.out.println("Las columnas son válidas.");
-    } else {
-        System.out.println("El Sudoku tiene errores en las columnas.");
-    }
-
-    if (validarBloques(sudoku, errores)) {
-        System.out.println("Los bloques son válidos.");
-    } else {
-        System.out.println("El Sudoku tiene errores en los bloques.");
-    }
-
+    
     System.out.println();
     System.out.println("Tablero de Sudoku:");
     
@@ -56,7 +44,6 @@ public class SudokuValidator {
         System.out.println();
     }
 }
-
 
     public static boolean validarFilas(int[][] sudoku, boolean[][] errores) {
 
@@ -128,7 +115,6 @@ public static boolean validarBloques(int[][] sudoku, boolean[][] errores) {
 
             int[] cantidad = new int[10];
 
-            // Contar los números del bloque 3x3
             for (int fila = filaInicio; fila < filaInicio + 3; fila++) {
 
                 for (int columna = columnaInicio; columna < columnaInicio + 3; columna++) {
